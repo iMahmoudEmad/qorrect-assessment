@@ -14,10 +14,6 @@ export class AuthService {
 	}
 
 	authUser(userData) {
-		const { email, password } = userData;
-		return this.http.post(this.url.postApisUrl().loginUrl, {
-			email,
-			password,
-		});
+		return this.http.post(this.url.postApisUrl().loginUrl, userData);
 	}
 }

@@ -91,6 +91,14 @@
 			&::placeholder {
 				color: #fff;
 			}
+
+			&--invalid {
+				width: 100%;
+				background-color: rgb(238, 44, 44);
+				padding: .5rem;
+				border-radius: .25rem;
+				margin-top: .5rem;
+			}
 		}
 
 		&__label {
@@ -98,12 +106,21 @@
 		}
 
 		&__button {
+			background-color: #fff;
 			font-size: 1rem;
-			color: #d663a9;
 			font-weight: 600;
 			padding: 1.5rem 2.5rem;
+			color: #df3bb9;
 			border-radius: 2rem;
 			line-height: 0;
+			border: none;
+			transition: all .2s ease-in-out;
+
+			&:hover {
+				background-image: linear-gradient(to top, #d16ba5, #d663a9, #da5bad, #dd52b2, #e048b8, #e042b8, #df3bb9, #df33b9, #dc2fb4, #da2aaf, #d726aa, #d421a5);
+				color: #fff;
+				box-shadow: 0 0 1rem 0 rgba(#000, .08);
+			}
 		}
 
 		&__forgot {

@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { NgForm } from "@angular/forms";
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AuthService } from "../../../core/authentication/auth.service";
 
 @Component({
@@ -7,21 +7,33 @@ import { AuthService } from "../../../core/authentication/auth.service";
 	templateUrl: "./login.component.html",
 	styleUrls: ["./login.component.scss"],
 })
-export class LoginComponent {
-	user = {
-		email: null,
-		password: null,
-	};
-	constructor(private auth: AuthService) {}
+export class LoginComponent implements OnInit {
+	user: FormGroup;
 
-	authUser(form: NgForm) {
-		const userData = {
-			email: form.value.email,
-			password: form.value.password,
-		};
+	constructor(private auth: AuthService, private formBuilder: FormBuilder) {}
 
-		this.auth.authUser(userData).subscribe((res) => {
-			console.log(res);
+	ngOnInit() {
+		this.user = this.formBuilder.group({
+			email: ["eve.holt@reqres.in", [Validators.required, Validators.email]],
+			password: ["cityslicka", [Validators.required, Validators.minLength(6)]],
+			remember_me: false,
+		});
+	}
+
+	get email() {
+		return this.user.get("email");
+	}
+
+	get password() {
+		return this.user.get("password");
+	}
+
+	authUser(user) {
+		const { email, password } = user.value;
+
+		this.auth.authUser({ email, password }).subscribe((res: any) => {
+			this.auth.isAuth = res.token;
+			console.log(res.token);
 		});
 	}
 }

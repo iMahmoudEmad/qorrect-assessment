@@ -1,6 +1,6 @@
 <div class="login">
 	<div class="login__modal">
-		<form #form="ngForm" (submit)="authUser(form)">
+		<form [formGroup]="user" (ngSubmit)="authUser(user)">
 			<div class="login__modal__header">
 				<img src="" alt="" />
 				<h2 class="login__modal__title">log in</h2>
@@ -8,36 +8,30 @@
 			<!-- .login__modal__header -->
 			<div class="login__modal__body">
 				<div class="login__modal__content">
-					<input
-						type="email"
-						class="login__modal__input"
-						placeholder="username"
-						autocomplete="off"
-						[(ngModel)]="user.email"
-						name="email"
-					/>
+					<input type="email" class="login__modal__input" placeholder="username" autocomplete="off"
+						formControlName="email" />
+					<div class="login__modal__input--invalid" *ngIf="email.invalid && email.touched">
+						Your email does not look right
+					</div>
 				</div>
 				<!-- .login__modal__content -->
 				<div class="login__modal__content">
-					<input
-						type="password"
-						class="login__modal__input"
-						placeholder="password"
-						autocomplete="off"
-						[(ngModel)]="user.password"
-						name="password"
-					/>
+					<input type="password" class="login__modal__input" placeholder="password" autocomplete="off"
+						formControlName="password" />
+					<div class="login__modal__input--invalid" *ngIf="password.invalid && password.touched">
+						Password must be at least 6 characters
+					</div>
 				</div>
 				<!-- .login__modal__content -->
 				<div class="login__modal__content">
-					<input type="checkbox" id="remember_me" />
+					<input type="checkbox" id="remember_me" formControlName="remember_me" />
 					<label for="remember_me" class="login__modal__label">
 						remember me
 					</label>
 				</div>
 				<!-- .login__modal__content -->
 				<div class="login__modal__content login__modal__content--button">
-					<button type="submit" class="login__modal__button">login</button>
+					<button [disabled]="user.invalid" type="submit" class="login__modal__button">login</button>
 				</div>
 				<!-- .login__modal__content -->
 			</div>
