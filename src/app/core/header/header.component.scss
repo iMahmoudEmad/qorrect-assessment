@@ -2,7 +2,7 @@
 	height: 4rem;
 	background-color: #493385;
 	color: #fff;
-	padding: .5rem 1rem;
+	padding: .5rem 1.5rem;
 	display: flex;
 	align-items: center;
 	margin-bottom: 2rem;
@@ -35,14 +35,21 @@
 			}
 
 			&__button {
+				width: 4.5rem;
+				height: 2rem;
 				background-color: #fff;
+				margin-right: 1rem;
 				color: #493385;
+				text-align: center;
 				font-weight: 600;
 				cursor: pointer;
-				padding: .5rem 1rem;
 				text-transform: capitalize;
 				border: none;
 				border-radius: .25rem;
+
+				&:last-of-type {
+					margin-right: 0;
+				}
 			}
 		}
 	}
