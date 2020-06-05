@@ -1,6 +1,6 @@
 <div class="login">
 	<div class="login__modal">
-		<form>
+		<form #form="ngForm" (submit)="authUser(form)">
 			<div class="login__modal__header">
 				<img src="" alt="" />
 				<h2 class="login__modal__title">log in</h2>
@@ -13,6 +13,8 @@
 						class="login__modal__input"
 						placeholder="username"
 						autocomplete="off"
+						[(ngModel)]="user.email"
+						name="email"
 					/>
 				</div>
 				<!-- .login__modal__content -->
@@ -22,6 +24,8 @@
 						class="login__modal__input"
 						placeholder="password"
 						autocomplete="off"
+						[(ngModel)]="user.password"
+						name="password"
 					/>
 				</div>
 				<!-- .login__modal__content -->
