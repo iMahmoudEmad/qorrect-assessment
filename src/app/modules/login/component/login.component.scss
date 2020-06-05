@@ -23,12 +23,13 @@
 
 	&__modal {
 		width: 500px;
+		background-image: linear-gradient(to left bottom, #d94b9c, #d3429a, #cd3899, #c72e97, #c02296, #bf1e97, #bf1998, #be1399, #c3179c, #c91a9f, #ce1ea2, #d421a5); // I have use this website (https://mycolor.space/gradient3?ori=to+top&hex=%23D16BA5&hex2=%23E338C0&hex3=%23D421A5&submit=submit) for create this gradient
 		z-index: 1;
-		background-image: linear-gradient(to top, #d16ba5, #d663a9, #da5bad, #dd52b2, #e048b8, #e042b8, #df3bb9, #df33b9, #dc2fb4, #da2aaf, #d726aa, #d421a5); // I have use this website (https://mycolor.space/gradient3?ori=to+top&hex=%23D16BA5&hex2=%23E338C0&hex3=%23D421A5&submit=submit) for create this gradient
 		border-radius: 1rem;
 		margin-top: 5rem;
 		margin-bottom: 5rem;
 		padding: 5rem;
+		box-shadow: 0 0 1rem 0 rgba(#000, .08);
 
 		&__input::placeholder,
 		&__label,

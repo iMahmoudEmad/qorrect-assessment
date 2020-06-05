@@ -7,6 +7,7 @@ import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./core/header/header.component";
 import { FooterComponent } from "./core/footer/footer.component";
 
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ToastrModule } from "ngx-toastr";
 
 @NgModule({
@@ -15,6 +16,7 @@ import { ToastrModule } from "ngx-toastr";
 		BrowserModule,
 		AppRoutingModule,
 		HttpClientModule,
+		BrowserAnimationsModule,
 		ToastrModule.forRoot(),
 	],
 	providers: [],

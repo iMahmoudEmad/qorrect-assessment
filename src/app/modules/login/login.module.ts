@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule } from "@angular/forms";
+import { AuthGuard } from "../../core/guards/auth.guard";
 
 import { LoginComponent } from "./component/login.component";
 
