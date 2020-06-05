@@ -122,6 +122,13 @@
 				color: #fff;
 				box-shadow: 0 0 1rem 0 rgba(#000, .08);
 			}
+
+			&:disabled {
+				cursor: not-allowed;
+				background-color: #e3e3e3;
+				background-image: none;
+				color: #777;
+			}
 		}
 
 		&__forgot {

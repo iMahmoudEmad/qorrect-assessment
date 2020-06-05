@@ -10,7 +10,7 @@
 				<div class="login__modal__content">
 					<input type="email" class="login__modal__input" placeholder="username" autocomplete="off"
 						formControlName="email" />
-					<div class="login__modal__input--invalid" *ngIf="email.invalid && email.touched">
+					<div class="login__modal__input--invalid" *ngIf="email.invalid || email.touched">
 						Your email does not look right
 					</div>
 				</div>
@@ -18,7 +18,7 @@
 				<div class="login__modal__content">
 					<input type="password" class="login__modal__input" placeholder="password" autocomplete="off"
 						formControlName="password" />
-					<div class="login__modal__input--invalid" *ngIf="password.invalid && password.touched">
+					<div class="login__modal__input--invalid" *ngIf="password.invalid || password.touched">
 						Password must be at least 6 characters
 					</div>
 				</div>
