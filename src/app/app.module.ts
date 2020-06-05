@@ -4,22 +4,23 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { HeaderComponent } from "./core/header/header.component";
-import { FooterComponent } from "./core/footer/footer.component";
 
+import { SharedModule } from "./shared/modules/shared.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ToastrModule, ToastrService } from "ngx-toastr";
 import { HttpErrorInterceptor } from "./core/interceptors/errors.interceptor";
 
 @NgModule({
-	declarations: [AppComponent, HeaderComponent, FooterComponent],
+	declarations: [AppComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		HttpClientModule,
 		BrowserAnimationsModule,
 		ToastrModule.forRoot(),
+		SharedModule,
 	],
+	exports: [SharedModule],
 	providers: [
 		{
 			provide: HTTP_INTERCEPTORS,

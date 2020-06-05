@@ -36,10 +36,10 @@ export class LoginComponent implements OnInit {
 		return this.user.get("password");
 	}
 
-	authUser(user) {
+	login(user) {
 		const { email, password } = user.value;
 
-		this.auth.authUser({ email, password }).subscribe((res: any) => {
+		this.auth.login({ email, password }).subscribe((res: any) => {
 			if (res.token) {
 				localStorage.setItem("token", res.token);
 				this.toastr.success("Login successfuly");
