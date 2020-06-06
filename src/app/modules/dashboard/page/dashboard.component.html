@@ -1,27 +1,59 @@
 <app-header></app-header>
 <section class="users" [class.modal-opened]="isUserModalOpened">
 	<div class="container">
-		<app-user [users]="users" (opened)="isUserModalOpened = $event"></app-user>
-	</div> <!-- .container -->
+		<app-user (click)="getUserInfo()" [users]="users" (opened)="userSelectedId = $event">
+		</app-user>
+	</div>
+	<!-- .container -->
 
-	<aside class="user-edit" [class.modal-opened]="isUserModalOpened">
+	<aside class="user-edit" [class.modal-opened]="isUserModalOpened" *ngIf="isUserModalOpened">
 		<div class="user-edit__content">
-			<button (click)="isUserModalOpened = false">close</button>
+			<button class="close" (click)="isUserModalOpened = false">x</button>
 			<div class="user-edit__image">
-				<img src="https://s3.amazonaws.com/uifaces/faces/twitter/olegpogodaev/128.jpg" alt=""
+				<img [src]="userInfo.avatar" [alt]="fullName(userInfo.first_name, userInfo.last_name)"
 					class="user-edit__image__source" />
-			</div> <!-- .user-edit__image -->
+			</div>
+			<!-- .user-edit__image -->
 			<div class="user-edit__actions">
-				<button class="user-edit__button user-edit__button--success">edit</button>
-				<button class="user-edit__button user-edit__button--danger">delete</button>
-			</div> <!-- .user-edit__actions -->
+				<button class="user-edit__button user-edit__button--success">
+					edit
+				</button>
+				<button class="user-edit__button user-edit__button--danger"
+					(click)="ngxSmartModalService.getModal('myModal').open()">
+					delete
+				</button>
+			</div>
+			<!-- .user-edit__actions -->
 			<div class="user-edit__data">
 				<ul class="user-edit__list">
-					<li class="user-edit__data__item">full name</li>
-					<li class="user-edit__data__item">email</li>
-					<li class="user-edit__data__item">last update:</li>
+					<li class="user-edit__data__item">
+						Name: {{fullName(userInfo.first_name, userInfo.last_name)}}
+					</li>
+					<li class="user-edit__data__item">
+						Email: {{userInfo.email}}
+					</li>
 				</ul>
-			</div> <!-- .user-edit__data -->
+				<p class="user-edit__update-date" *ngIf="userInfo.updatedAt">
+					last update: {{userInfo.updatedAt | date: 'd/M/yyyy, h:mm a'}}
+				</p>
+			</div>
+			<!-- .user-edit__data -->
 		</div>
 	</aside>
 </section>
+
+<ngx-smart-modal #myModal identifier="myModal">
+	<p class="delete__confirmation-message">
+		are you sure want to delete <span>{{fullName(userInfo?.first_name, userInfo?.last_name)}}</span>?
+	</p>
+
+	<div class="delete__actions">
+		<button (click)="myModal.close()" class="user-edit__button">
+			No
+		</button>
+
+		<button (click)="deleteUser(); myModal.close()" class="user-edit__button user-edit__button--danger">
+			Yes
+		</button>
+	</div>
+</ngx-smart-modal>

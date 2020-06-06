@@ -1,0 +1,43 @@
+<aside class="user-edit" [class.modal-opened]="isUserModalOpened" *ngIf="isUserModalOpened">
+	<div class="user-edit__content">
+		<button class="close" (click)="isUserModalOpened = false">x</button>
+		<div class="user-edit__image">
+			<img src="https://s3.amazonaws.com/uifaces/faces/twitter/olegpogodaev/128.jpg" alt=""
+				class="user-edit__image__source" />
+		</div>
+		<!-- .user-edit__image -->
+		<div class="user-edit__actions">
+			<button class="user-edit__button user-edit__button--success">
+				edit
+			</button>
+			<button class="user-edit__button user-edit__button--danger"
+				(click)="ngxSmartModalService.getModal('myModal').open()">
+				delete
+			</button>
+		</div>
+		<!-- .user-edit__actions -->
+		<div class="user-edit__data">
+			<ul class="user-edit__list">
+				<li class="user-edit__data__item">full name</li>
+				<li class="user-edit__data__item">email</li>
+				<li class="user-edit__data__item">last update:</li>
+			</ul>
+		</div>
+		<!-- .user-edit__data -->
+	</div>
+</aside>
+<ngx-smart-modal #myModal identifier="myModal">
+	<p class="delete__confirmation-message">
+		are you sure want to delete <span>fullName</span>?
+	</p>
+
+	<div class="delete__actions">
+		<button (click)="myModal.close()" class="user-edit__button">
+			No
+		</button>
+
+		<button (click)="deleteUser(); myModal.close()" class="user-edit__button user-edit__button--danger">
+			Yes
+		</button>
+	</div>
+</ngx-smart-modal>

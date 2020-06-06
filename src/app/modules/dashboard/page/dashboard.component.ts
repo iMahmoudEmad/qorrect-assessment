@@ -2,6 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { FormGroup } from "@angular/forms";
 import { DashboardService } from "src/app/core/services/dashboard.service";
+import { ToastrService } from "ngx-toastr";
+import { NgxSmartModalService } from "ngx-smart-modal";
+import { SharedService } from "src/app/shared/services/shared.service";
 
 @Component({
 	selector: "app-dashboard",
@@ -11,11 +14,16 @@ import { DashboardService } from "src/app/core/services/dashboard.service";
 export class DashboardComponent implements OnInit {
 	users: any[];
 	user: FormGroup;
+	userInfo;
+	userSelectedId;
 	isUserModalOpened = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
-		private dashboardService: DashboardService
+		private dashboardService: DashboardService,
+		private toaster: ToastrService,
+		public ngxSmartModalService: NgxSmartModalService,
+		private sharedService: SharedService
 	) {}
 
 	ngOnInit() {
@@ -30,9 +38,35 @@ export class DashboardComponent implements OnInit {
 		this.getAllUsers();
 	}
 
+	fullName(first, last) {
+		return this.sharedService.fullName(first, last);
+	}
+
 	getAllUsers() {
 		this.dashboardService.getAllUsers().subscribe((users) => {
 			this.users = users;
 		});
+	}
+
+	getUserInfo(userId = this.userSelectedId) {
+		// this.isUserModalOpened = false; // if you wont to close aside userInfo remove this comment
+		if (this.userSelectedId) {
+			this.dashboardService.getUserInfo(userId).subscribe((res) => {
+				this.userInfo = res;
+				this.isUserModalOpened = true;
+				console.log(this.userInfo);
+			});
+		}
+	}
+
+	deleteUser(userId = this.userSelectedId) {
+		if (this.userSelectedId) {
+			this.dashboardService.deleteUser(userId).subscribe(() => {
+				this.users = this.users.filter((user) => user.id !== userId);
+				this.toaster.success("Deleted successfuly");
+				this.userSelectedId = null;
+				this.isUserModalOpened = false;
+			});
+		}
 	}
 }

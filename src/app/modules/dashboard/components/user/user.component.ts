@@ -18,7 +18,7 @@ export class UserComponent implements OnInit {
 		return this.sharedService.fullName(first, last);
 	}
 
-	openUserData() {
-		return this.opened.emit(true);
+	openUserData(userId) {
+		return this.opened.emit(userId);
 	}
 }

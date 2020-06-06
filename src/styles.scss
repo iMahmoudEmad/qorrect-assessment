@@ -1,8 +1,10 @@
 @import '~ngx-toastr/toastr';
+@import "~ngx-smart-modal/ngx-smart-modal";
 
 * {
 	box-sizing: border-box;
 	outline: none;
+	font-family: 'Raleway', sans-serif;
 }
 
 body {

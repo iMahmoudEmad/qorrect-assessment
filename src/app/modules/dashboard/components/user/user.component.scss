@@ -37,7 +37,7 @@
 		background-color: #fff;
 		color: #333;
 		position: absolute;
-		bottom: -60px;
+		bottom: -61px;
 		left: 0;
 		padding: 1rem;
 		text-align: center;
@@ -47,6 +47,9 @@
 		h2 {
 			margin-top: 0;
 			margin-bottom: 0;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
 		}
 	}
 

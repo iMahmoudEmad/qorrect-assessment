@@ -65,29 +65,6 @@
 			margin-bottom: 0;
 		}
 
-		&__button {
-			width: 4rem;
-			height: 1.5rem;
-			border-radius: .25rem;
-			margin-right: 1rem;
-			text-transform: capitalize;
-			border: none;
-			color: #fff;
-			font-weight: 600;
-
-			&:last-of-type {
-				margin-right: 0;
-			}
-
-			&--success {
-				background-color: #81EB9A;
-			}
-
-			&--danger {
-				background-color: #FF4948;
-			}
-		}
-
 		&__data {
 			text-transform: capitalize;
 
@@ -99,6 +76,70 @@
 				}
 			}
 		}
+
+		&__update-date {
+			position: absolute;
+			bottom: 1rem;
+			right: 1rem;
+		}
+	}
+}
+
+.user-edit__button {
+	width: 4rem;
+	height: 1.5rem;
+	border-radius: .25rem;
+	margin-right: 1rem;
+	text-transform: capitalize;
+	border: none;
+	color: #493385;
+	font-weight: 600;
+	box-shadow: 0 0 1rem 0 rgba(#000, .3);
+	cursor: pointer;
+
+	&:last-of-type {
+		margin-right: 0;
 	}
 
+	&--success,
+	&--danger {
+		color: #fff;
+	}
+
+	&--success {
+		background-color: #81EB9A;
+	}
+
+	&--danger {
+		background-color: #FF4948;
+	}
+}
+
+.close {
+	position: absolute;
+	top: .5rem;
+	right: .5rem;
+	padding: 0.3rem 0.5rem;
+	background: none;
+	border: none;
+	color: #fff;
+	font-size: 2rem;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.delete {
+	&__confirmation-message {
+		&:first-letter {
+			text-transform: capitalize;
+		}
+
+		span {
+			font-weight: 900;
+		}
+	}
+
+	&__actions {
+		text-align: right;
+	}
 }
