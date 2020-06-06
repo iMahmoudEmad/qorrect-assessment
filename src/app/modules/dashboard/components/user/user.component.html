@@ -1,1 +1,11 @@
-<p>user works!</p>
+<div class="user" *ngFor="let user of users">
+	<div class="user__data" (click)="openUserData()">
+		<div class="user__img">
+			<img [src]="user.avatar" [alt]="fullName(user.first_name, user.last_name) + ' Picture'"
+				class="user__img__source" />
+		</div>
+		<div class="user__name">
+			<h2>{{fullName(user.first_name, user.last_name)}}</h2>
+		</div>
+	</div>
+</div>
