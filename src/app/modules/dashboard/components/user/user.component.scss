@@ -44,7 +44,7 @@
 		text-transform: capitalize;
 		transition: bottom .2s ease-in-out;
 
-		h2 {
+		&--full {
 			margin-top: 0;
 			margin-bottom: 0;
 			text-overflow: ellipsis;

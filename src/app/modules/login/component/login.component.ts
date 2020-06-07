@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
 		private router: Router,
 		private store: Store<Token>
 	) {
-		this.store.subscribe((res) => (this.token = res.token));
 		this.store.select(loginReducerS).subscribe((token) => (this.token = token));
 	}
 

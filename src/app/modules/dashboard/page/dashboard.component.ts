@@ -94,10 +94,11 @@ export class DashboardComponent implements OnInit {
 
 	pageChanged(currentPage) {
 		this.dashboardService.getAllUsers(currentPage).subscribe((res: any) => {
-			this.users = res.data;
+			this.store.dispatch({
+				type: DashboardActions.ALL_USERS,
+				payload: res.data,
+			});
 			this.currentPage = res.page;
-			this.total = res.total;
-			this.per_page = res.per_page;
 		});
 	}
 }
