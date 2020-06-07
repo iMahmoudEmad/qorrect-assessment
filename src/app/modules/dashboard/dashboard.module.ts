@@ -6,11 +6,14 @@ import { SharedModule } from "src/app/shared/modules/shared.module";
 import { UserComponent } from "./components/user/user.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NgxSmartModalModule } from "ngx-smart-modal";
+import { ClickOutsideModule } from "ng-click-outside";
+import { AuthGuard } from "src/app/core/guards/auth.guard";
 
 const routes: Routes = [
 	{
 		path: "",
 		component: DashboardComponent,
+		canActivate: [AuthGuard],
 	},
 ];
 
@@ -21,7 +24,8 @@ const routes: Routes = [
 		NgxSmartModalModule.forRoot(),
 		SharedModule,
 		ReactiveFormsModule,
+		ClickOutsideModule,
 	],
-	exports: [DashboardComponent, SharedModule],
+	exports: [SharedModule],
 })
 export class DashboardModule {}

@@ -4,6 +4,10 @@ import { AuthService } from "../../../core/authentication/auth.service";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
 
+import { Store } from "@ngrx/store";
+import * as LoginActions from "../store/login.action";
+import { Token } from "../store/login.store";
+
 @Component({
 	selector: "app-login",
 	templateUrl: "./login.component.html",
@@ -11,13 +15,17 @@ import { Router } from "@angular/router";
 })
 export class LoginComponent implements OnInit {
 	user: FormGroup;
+	token = null;
 
 	constructor(
 		private auth: AuthService,
 		private formBuilder: FormBuilder,
 		private toastr: ToastrService,
-		private router: Router
-	) {}
+		private router: Router,
+		private store: Store<Token>
+	) {
+		this.store.subscribe((res) => (this.token = res.token));
+	}
 
 	ngOnInit() {
 		if (this.auth.isAuthenticated()) this.router.navigate(["dashboard"]);
@@ -41,7 +49,10 @@ export class LoginComponent implements OnInit {
 
 		this.auth.login({ email, password }).subscribe((res: any) => {
 			if (res.token) {
-				localStorage.setItem("token", res.token);
+				this.store.dispatch({
+					type: LoginActions.LOGIN_SUCCESS,
+					token: res.token,
+				});
 				this.toastr.success("Login successfuly");
 				this.router.navigate(["dashboard"]);
 			}

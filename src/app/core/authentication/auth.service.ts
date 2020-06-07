@@ -1,23 +1,28 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { UrlsService } from "../../shared/apis/urls.service";
-import { Subject } from "rxjs";
 import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { Token } from "src/app/modules/login/store/login.store";
+
+import * as LoginActions from "../../modules/login/store/login.action";
 
 @Injectable({
 	providedIn: "root",
 })
 export class AuthService {
-	isAuth: string;
+	token;
 	constructor(
 		private http: HttpClient,
 		private url: UrlsService,
-		private router: Router
-	) {}
+		private router: Router,
+		private store: Store<Token>
+	) {
+		this.store.subscribe((res: any) => (this.token = res.token.token));
+	}
 
 	isAuthenticated() {
-		this.isAuth = localStorage.getItem("token");
-		return this.isAuth ? true : false;
+		return this.token ? true : false;
 	}
 
 	login(userData) {
@@ -25,7 +30,11 @@ export class AuthService {
 	}
 
 	logout() {
-		localStorage.removeItem("token");
+		this.store.dispatch({
+			type: LoginActions.LOGOUT_SUCCESS,
+			token: null,
+		});
+		this.token = null;
 		this.router.navigate(["login"]);
 	}
 }

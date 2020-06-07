@@ -6,7 +6,8 @@
 	</div>
 	<!-- .container -->
 
-	<aside class="user-edit" [class.modal-opened]="isUserModalOpened" *ngIf="isUserModalOpened">
+	<aside class="user-edit" [class.modal-opened]="isUserModalOpened" *ngIf="isUserModalOpened"
+		(clickOutside)="isUserModalOpened = false">
 		<div class="user-edit__content">
 			<button class="close" (click)="isUserModalOpened = false">x</button>
 			<div class="user-edit__image">
@@ -27,14 +28,12 @@
 			<div class="user-edit__data">
 				<ul class="user-edit__list">
 					<li class="user-edit__data__item">
-						Name: {{fullName(userInfo.first_name, userInfo.last_name)}}
+						Name: {{ fullName(userInfo.first_name, userInfo.last_name) }}
 					</li>
-					<li class="user-edit__data__item">
-						Email: {{userInfo.email}}
-					</li>
+					<li class="user-edit__data__item">Email: {{ userInfo.email }}</li>
 				</ul>
 				<p class="user-edit__update-date" *ngIf="userInfo.updatedAt">
-					last update: {{userInfo.updatedAt | date: 'd/M/yyyy, h:mm a'}}
+					last update: {{ userInfo.updatedAt | date: "d/M/yyyy, h:mm a" }}
 				</p>
 			</div>
 			<!-- .user-edit__data -->
@@ -44,7 +43,8 @@
 
 <ngx-smart-modal #myModal identifier="myModal">
 	<p class="delete__confirmation-message">
-		are you sure want to delete <span>{{fullName(userInfo?.first_name, userInfo?.last_name)}}</span>?
+		are you sure want to delete
+		<span>{{ fullName(userInfo?.first_name, userInfo?.last_name) }}</span>?
 	</p>
 
 	<div class="delete__actions">

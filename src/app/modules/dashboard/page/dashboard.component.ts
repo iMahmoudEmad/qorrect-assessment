@@ -5,6 +5,9 @@ import { DashboardService } from "src/app/core/services/dashboard.service";
 import { ToastrService } from "ngx-toastr";
 import { NgxSmartModalService } from "ngx-smart-modal";
 import { SharedService } from "src/app/shared/services/shared.service";
+import { Store } from "@ngrx/store";
+import { Token } from "../../login/store/login.store";
+import { AuthService } from "src/app/core/authentication/auth.service";
 
 @Component({
 	selector: "app-dashboard",
@@ -17,14 +20,19 @@ export class DashboardComponent implements OnInit {
 	userInfo;
 	userSelectedId;
 	isUserModalOpened = false;
+	token;
 
 	constructor(
 		private formBuilder: FormBuilder,
 		private dashboardService: DashboardService,
 		private toaster: ToastrService,
 		public ngxSmartModalService: NgxSmartModalService,
-		private sharedService: SharedService
-	) {}
+		private sharedService: SharedService,
+		private store: Store<Token>,
+		private auth: AuthService
+	) {
+		this.store.subscribe((res) => (this.token = res.token));
+	}
 
 	ngOnInit() {
 		this.user = this.formBuilder.group({
@@ -54,7 +62,6 @@ export class DashboardComponent implements OnInit {
 			this.dashboardService.getUserInfo(userId).subscribe((res) => {
 				this.userInfo = res;
 				this.isUserModalOpened = true;
-				console.log(this.userInfo);
 			});
 		}
 	}
