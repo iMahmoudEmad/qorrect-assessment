@@ -6,8 +6,6 @@ import { ToastrService } from "ngx-toastr";
 import { NgxSmartModalService } from "ngx-smart-modal";
 import { SharedService } from "src/app/shared/services/shared.service";
 import { Store } from "@ngrx/store";
-import { Token } from "../../login/store/login.store";
-import { AuthService } from "src/app/core/authentication/auth.service";
 import * as DashboardActions from "../store/dashboard.action";
 import { Users } from "../store/dashboard.store";
 import { dashboardReducerS } from "../store/dashboard.reducer";
@@ -34,8 +32,7 @@ export class DashboardComponent implements OnInit {
 		private toaster: ToastrService,
 		public ngxSmartModalService: NgxSmartModalService,
 		private sharedService: SharedService,
-		private store: Store<Users>,
-		private auth: AuthService
+		private store: Store<Users>
 	) {
 		this.store
 			.select(dashboardReducerS)
@@ -76,9 +73,6 @@ export class DashboardComponent implements OnInit {
 			this.dashboardService.getUserInfo(userId).subscribe((res: any) => {
 				this.userInfo = res.data;
 				this.isUserModalOpened = true;
-				this.currentPage = res.page;
-				this.total = res.total;
-				this.per_page = res.per_page;
 			});
 		}
 	}

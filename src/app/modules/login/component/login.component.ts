@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import * as LoginActions from "../store/login.action";
 import { Token } from "../store/login.store";
+import { loginReducerS } from "../store/login.reducer";
 
 @Component({
 	selector: "app-login",
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
 		private store: Store<Token>
 	) {
 		this.store.subscribe((res) => (this.token = res.token));
+		this.store.select(loginReducerS).subscribe((token) => (this.token = token));
 	}
 
 	ngOnInit() {
