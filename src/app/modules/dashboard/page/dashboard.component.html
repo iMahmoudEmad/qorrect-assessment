@@ -1,7 +1,8 @@
 <app-header></app-header>
 <section class="users" [class.modal-opened]="isUserModalOpened">
 	<div class="container" [class.modal-opened]="isUserModalOpened">
-		<app-user (click)="getUserInfo()" [users]="users" (opened)="userSelectedId = $event">
+		<app-user (click)="getUserInfo()" [users]="users" (opened)="userSelectedId = $event"
+			(curruntPage)="pageChanged($event)" [per_page]="per_page" [page]="currentPage" [total]="total">
 		</app-user>
 	</div>
 	<!-- .container -->

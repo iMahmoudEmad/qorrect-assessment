@@ -1,4 +1,5 @@
-<div class="user" *ngFor="let user of users">
+<div class="user"
+	*ngFor="let user of users | paginate: { itemsPerPage: per_page, currentPage: page, totalItems: total }">
 	<div class="user__data" (click)="openUserData(user.id)">
 		<div class="user__img">
 			<img [src]="user.avatar" [alt]="fullName(user.first_name, user.last_name) + ' Picture'"
@@ -9,3 +10,5 @@
 		</div>
 	</div>
 </div>
+
+<pagination-controls (pageChange)="pageChanged($event)" maxSize="5" directionLinks="true"></pagination-controls>

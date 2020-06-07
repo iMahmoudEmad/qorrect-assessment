@@ -21,6 +21,9 @@ export class DashboardComponent implements OnInit {
 	userSelectedId;
 	isUserModalOpened = false;
 	token;
+	currentPage: number;
+	total: number;
+	per_page: number;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -51,17 +54,23 @@ export class DashboardComponent implements OnInit {
 	}
 
 	getAllUsers() {
-		this.dashboardService.getAllUsers().subscribe((users) => {
-			this.users = users;
+		this.dashboardService.getAllUsers().subscribe((res: any) => {
+			this.users = res.data;
+			this.currentPage = res.page;
+			this.total = res.total;
+			this.per_page = res.per_page;
 		});
 	}
 
 	getUserInfo(userId = this.userSelectedId) {
 		// this.isUserModalOpened = false; // if you wont to close aside userInfo remove this comment
 		if (this.userSelectedId) {
-			this.dashboardService.getUserInfo(userId).subscribe((res) => {
-				this.userInfo = res;
+			this.dashboardService.getUserInfo(userId).subscribe((res: any) => {
+				this.userInfo = res.data;
 				this.isUserModalOpened = true;
+				this.currentPage = res.page;
+				this.total = res.total;
+				this.per_page = res.per_page;
 			});
 		}
 	}
@@ -75,5 +84,14 @@ export class DashboardComponent implements OnInit {
 				this.isUserModalOpened = false;
 			});
 		}
+	}
+
+	pageChanged(currentPage) {
+		this.dashboardService.getAllUsers(currentPage).subscribe((res: any) => {
+			this.users = res.data;
+			this.currentPage = res.page;
+			this.total = res.total;
+			this.per_page = res.per_page;
+		});
 	}
 }

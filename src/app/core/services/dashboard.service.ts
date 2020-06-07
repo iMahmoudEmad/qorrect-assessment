@@ -9,16 +9,12 @@ import { map } from "rxjs/operators";
 export class DashboardService {
 	constructor(private url: UrlsService, private http: HttpClient) {}
 
-	getAllUsers() {
-		return this.http
-			.get(this.url.getApisUrl().getAllUsers)
-			.pipe(map((res) => res["data"]));
+	getAllUsers(page = 1) {
+		return this.http.get(`${this.url.getApisUrl().getAllUsers}/?page=${page}`);
 	}
 
 	getUserInfo(id) {
-		return this.http
-			.get(`${this.url.getApisUrl().singleUser}${id}`)
-			.pipe(map((res) => res["data"]));
+		return this.http.get(`${this.url.getApisUrl().singleUser}${id}`);
 	}
 
 	deleteUser(id) {

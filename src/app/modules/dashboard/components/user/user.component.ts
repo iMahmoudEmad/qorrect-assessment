@@ -8,7 +8,11 @@ import { SharedService } from "src/app/shared/services/shared.service";
 })
 export class UserComponent implements OnInit {
 	@Input() users;
+	@Input() page;
+	@Input() total;
+	@Input() per_page;
 	@Output() opened: EventEmitter<any> = new EventEmitter();
+	@Output() curruntPage: EventEmitter<any> = new EventEmitter();
 
 	constructor(private sharedService: SharedService) {}
 
@@ -20,5 +24,9 @@ export class UserComponent implements OnInit {
 
 	openUserData(userId) {
 		return this.opened.emit(userId);
+	}
+
+	pageChanged(e) {
+		this.curruntPage.emit(e);
 	}
 }
