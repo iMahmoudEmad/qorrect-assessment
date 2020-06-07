@@ -8,6 +8,9 @@ import { SharedService } from "src/app/shared/services/shared.service";
 import { Store } from "@ngrx/store";
 import { Token } from "../../login/store/login.store";
 import { AuthService } from "src/app/core/authentication/auth.service";
+import * as DashboardActions from "../store/dashboard.action";
+import { Users } from "../store/dashboard.store";
+import { dashboardReducerS } from "../store/dashboard.reducer";
 
 @Component({
 	selector: "app-dashboard",
@@ -15,7 +18,7 @@ import { AuthService } from "src/app/core/authentication/auth.service";
 	styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
-	users: any[];
+	users;
 	user: FormGroup;
 	userInfo;
 	userSelectedId;
@@ -31,10 +34,12 @@ export class DashboardComponent implements OnInit {
 		private toaster: ToastrService,
 		public ngxSmartModalService: NgxSmartModalService,
 		private sharedService: SharedService,
-		private store: Store<Token>,
+		private store: Store<Users>,
 		private auth: AuthService
 	) {
-		this.store.subscribe((res) => (this.token = res.token));
+		this.store
+			.select(dashboardReducerS)
+			.subscribe((users) => (this.users = users));
 	}
 
 	ngOnInit() {
@@ -55,7 +60,10 @@ export class DashboardComponent implements OnInit {
 
 	getAllUsers() {
 		this.dashboardService.getAllUsers().subscribe((res: any) => {
-			this.users = res.data;
+			this.store.dispatch({
+				type: DashboardActions.ALL_USERS,
+				payload: res.data,
+			});
 			this.currentPage = res.page;
 			this.total = res.total;
 			this.per_page = res.per_page;
@@ -78,7 +86,11 @@ export class DashboardComponent implements OnInit {
 	deleteUser(userId = this.userSelectedId) {
 		if (this.userSelectedId) {
 			this.dashboardService.deleteUser(userId).subscribe(() => {
-				this.users = this.users.filter((user) => user.id !== userId);
+				const users = this.users.filter((user) => user.id !== userId);
+				this.store.dispatch({
+					type: DashboardActions.ALL_USERS,
+					payload: users,
+				});
 				this.toaster.success("Deleted successfuly");
 				this.userSelectedId = null;
 				this.isUserModalOpened = false;
