@@ -7,7 +7,7 @@ import { NgxSmartModalService } from "ngx-smart-modal";
 import { SharedService } from "src/app/shared/services/shared.service";
 import { Store } from "@ngrx/store";
 import * as DashboardActions from "../store/dashboard.action";
-import { Users } from "../store/dashboard.store";
+import { Users, User } from "../store/dashboard.store";
 import { dashboardReducerS } from "../store/dashboard.reducer";
 
 @Component({
@@ -90,6 +90,12 @@ export class DashboardComponent implements OnInit {
 				this.isUserModalOpened = false;
 			});
 		}
+	}
+
+	addUser(user: User) {
+		this.dashboardService.addUser(user).subscribe((res) => {
+			console.log(res);
+		});
 	}
 
 	pageChanged(currentPage) {

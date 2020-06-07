@@ -9,6 +9,14 @@ export interface Users {
 	};
 }
 
+export interface User {
+	id: number;
+	email: string;
+	first_name: string;
+	last_name: string;
+	avatar: string;
+}
+
 export const initialState = {
 	id: null,
 	email: null,

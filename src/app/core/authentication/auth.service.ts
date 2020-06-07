@@ -6,6 +6,7 @@ import { Store } from "@ngrx/store";
 import { Token } from "src/app/modules/login/store/login.store";
 
 import * as LoginActions from "../../modules/login/store/login.action";
+import { loginReducerS } from "../../modules/login/store/login.reducer";
 
 @Injectable({
 	providedIn: "root",
@@ -18,7 +19,7 @@ export class AuthService {
 		private router: Router,
 		private store: Store<Token>
 	) {
-		this.store.subscribe((res: any) => (this.token = res.token.token));
+		this.store.select(loginReducerS).subscribe((token) => (this.token = token));
 	}
 
 	isAuthenticated() {
