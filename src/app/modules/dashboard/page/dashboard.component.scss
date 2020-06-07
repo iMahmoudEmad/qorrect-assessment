@@ -1,26 +1,33 @@
+$modal-width: 500px;
+
 .users {
 	position: relative;
 	transition: all .2s ease-in-out;
 	overflow: hidden;
 
 	&.modal-opened {
-		padding-right: 500px;
+		padding-right: $modal-width;
 	}
 
 	.container {
 		width: 1170px;
 		margin-right: auto;
 		margin-left: auto;
+		transition: width .2s ease-in-out;
 
 		@media(max-width: 1280px) {
 			width: 100%;
 			padding-right: 2rem;
 			padding-left: 2rem;
 		}
+
+		&.modal-opened {
+			width: 670px;
+		}
 	}
 
 	.user-edit {
-		width: 500px;
+		width: $modal-width;
 		height: 536px;
 		background-color: #493385;
 		padding: 4rem 2rem;
@@ -28,7 +35,7 @@
 		text-align: center;
 		position: absolute;
 		top: 0;
-		right: -500px;
+		right: -$modal-width;
 		border-radius: .25rem;
 		display: flex;
 		justify-content: center;

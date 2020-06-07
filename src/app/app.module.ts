@@ -12,7 +12,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ToastrModule, ToastrService } from "ngx-toastr";
 import { HttpErrorInterceptor } from "./core/interceptors/errors.interceptor";
 import { environment } from "../environments/environment";
+
+// Reducers
 import { loginReducer } from "./modules/login/store/login.reducer";
+import { dashboardReducer } from "./modules/dashboard/store/dashboard.reducer";
 
 @NgModule({
 	declarations: [AppComponent],
@@ -26,6 +29,7 @@ import { loginReducer } from "./modules/login/store/login.reducer";
 		StoreModule.forRoot(
 			{
 				token: loginReducer,
+				users: dashboardReducer,
 			},
 			{}
 		),
