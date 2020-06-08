@@ -16,8 +16,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 	): Observable<HttpEvent<any>> {
 		return next.handle(request).pipe(
 			catchError(() => {
-				this.toastr.error("Email or password is incorrect");
-				return throwError("Email or password is incorrect");
+				this.toastr.error("Something went wrong");
+				return throwError("Something went wrong");
 			})
 		);
 	}

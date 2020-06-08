@@ -1,6 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
-import { FormGroup } from "@angular/forms";
 import { DashboardService } from "src/app/core/services/dashboard.service";
 import { ToastrService } from "ngx-toastr";
 import { NgxSmartModalService } from "ngx-smart-modal";
@@ -9,6 +7,7 @@ import { Store } from "@ngrx/store";
 import * as DashboardActions from "../store/dashboard.action";
 import { Users, User } from "../store/dashboard.store";
 import { dashboardReducerS } from "../store/dashboard.reducer";
+import { NgForm } from "@angular/forms";
 
 @Component({
 	selector: "app-dashboard",
@@ -17,17 +16,24 @@ import { dashboardReducerS } from "../store/dashboard.reducer";
 })
 export class DashboardComponent implements OnInit {
 	users;
-	user: FormGroup;
-	userInfo;
+	userInfo = {
+		id: null,
+		first_name: null,
+		last_name: null,
+		email: null,
+		avatar: null,
+		updatedAt: null,
+		createdAt: null,
+	};
 	userSelectedId;
 	isUserModalOpened = false;
-	token;
+	isAddUserModalOpened = false;
 	currentPage: number;
 	total: number;
 	per_page: number;
+	token;
 
 	constructor(
-		private formBuilder: FormBuilder,
 		private dashboardService: DashboardService,
 		private toaster: ToastrService,
 		public ngxSmartModalService: NgxSmartModalService,
@@ -40,14 +46,6 @@ export class DashboardComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.user = this.formBuilder.group({
-			id: [null, [Validators.required, Validators.minLength(1)]],
-			avatar: ["", [Validators.required]],
-			email: ["", [Validators.required, Validators.email]],
-			first_name: ["", [Validators.required, Validators.minLength(2)]],
-			last_name: ["", [Validators.required, Validators.minLength(2)]],
-		});
-
 		this.getAllUsers();
 	}
 
@@ -59,7 +57,7 @@ export class DashboardComponent implements OnInit {
 		this.dashboardService.getAllUsers().subscribe((res: any) => {
 			this.store.dispatch({
 				type: DashboardActions.ALL_USERS,
-				payload: res.data,
+				users: res.data,
 			});
 			this.currentPage = res.page;
 			this.total = res.total;
@@ -69,7 +67,7 @@ export class DashboardComponent implements OnInit {
 
 	getUserInfo(userId = this.userSelectedId) {
 		// this.isUserModalOpened = false; // if you wont to close aside userInfo remove this comment
-		if (this.userSelectedId) {
+		if (this.userSelectedId !== this.userInfo.id) {
 			this.dashboardService.getUserInfo(userId).subscribe((res: any) => {
 				this.userInfo = res.data;
 				this.isUserModalOpened = true;
@@ -83,7 +81,7 @@ export class DashboardComponent implements OnInit {
 				const users = this.users.filter((user) => user.id !== userId);
 				this.store.dispatch({
 					type: DashboardActions.ALL_USERS,
-					payload: users,
+					users: users,
 				});
 				this.toaster.success("Deleted successfuly");
 				this.userSelectedId = null;
@@ -92,9 +90,25 @@ export class DashboardComponent implements OnInit {
 		}
 	}
 
-	addUser(user: User) {
-		this.dashboardService.addUser(user).subscribe((res) => {
-			console.log(res);
+	editUser() {
+		this.dashboardService.editUser(this.userInfo).subscribe((user: any) => {
+			this.userInfo = user;
+			this.store.dispatch({
+				type: DashboardActions.UPDATE_USER,
+				users: user,
+			});
+			this.toaster.success("Edit successfuly");
+		});
+	}
+
+	addUser() {
+		this.dashboardService.addUser(this.userInfo).subscribe((user) => {
+			this.users = [...this.users, user];
+			this.store.dispatch({
+				type: DashboardActions.ADD_USER,
+				users: user,
+			});
+			this.toaster.success("Added successfuly");
 		});
 	}
 
@@ -102,7 +116,7 @@ export class DashboardComponent implements OnInit {
 		this.dashboardService.getAllUsers(currentPage).subscribe((res: any) => {
 			this.store.dispatch({
 				type: DashboardActions.ALL_USERS,
-				payload: res.data,
+				users: res.data,
 			});
 			this.currentPage = res.page;
 		});

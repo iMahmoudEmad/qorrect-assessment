@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header (addUserModalOpened)="isAddUserModalOpened = $event"></app-header>
 <section class="users" [class.modal-opened]="isUserModalOpened">
 	<div class="container" [class.modal-opened]="isUserModalOpened">
 		<app-users (click)="getUserInfo()" [users]="users" (opened)="userSelectedId = $event"
@@ -17,11 +17,12 @@
 			</div>
 			<!-- .user-edit__image -->
 			<div class="user-edit__actions">
-				<button class="user-edit__button user-edit__button--success">
+				<button class="user-edit__button user-edit__button--success"
+					(click)="ngxSmartModalService.getModal('userModal').open()">
 					edit
 				</button>
 				<button class="user-edit__button user-edit__button--danger"
-					(click)="ngxSmartModalService.getModal('myModal').open()">
+					(click)="ngxSmartModalService.getModal('deleteModal').open()">
 					delete
 				</button>
 			</div>
@@ -34,7 +35,7 @@
 					<li class="user-edit__data__item">Email: {{ userInfo.email }}</li>
 				</ul>
 				<p class="user-edit__update-date" *ngIf="userInfo.updatedAt">
-					last update: {{ userInfo.updatedAt | date: "d/M/yyyy, h:mm a" }}
+					last update: {{ (userInfo.updatedAt || userInfo.createdAt) | date: "d/M/yyyy, h:mm a" }}
 				</p>
 			</div>
 			<!-- .user-edit__data -->
@@ -42,19 +43,65 @@
 	</aside>
 </section>
 
-<ngx-smart-modal #myModal identifier="myModal">
+<ngx-smart-modal #deleteModal identifier="deleteModal">
 	<p class="delete__confirmation-message">
 		are you sure want to delete
 		<span>{{ fullName(userInfo?.first_name, userInfo?.last_name) }}</span>?
 	</p>
 
 	<div class="delete__actions">
-		<button (click)="myModal.close()" class="user-edit__button">
+		<button (click)="deleteModal.close()" class="user-edit__button">
 			No
 		</button>
 
-		<button (click)="deleteUser(); myModal.close()" class="user-edit__button user-edit__button--danger">
+		<button (click)="deleteUser(); deleteModal.close()" class="user-edit__button user-edit__button--danger">
 			Yes
 		</button>
+	</div>
+</ngx-smart-modal>
+
+<ngx-smart-modal #userModal identifier="userModal">
+	<div class="user-modal">
+		<div class="user-modal__header">
+			<h2 class="user-modal__header__title">
+				{{ userSelectedId ? "Edit user:" : "Add New User" }}
+				<span *ngIf="userInfo" class="user-modal__header__username">
+					{{ fullName(userInfo.first_name, userInfo.last_name) }}
+				</span>
+			</h2>
+		</div>
+
+		<div class="user-modal__body">
+			<form #user="ngForm">
+				<div class="user-modal__body__content">
+					<label class="user-modal__body__label" for="first_name">First name:</label>
+					<input id="first_name" type="text" class="user-modal__body__input" placeholder="First Name" autocomplete="off"
+						name="first_name" [(ngModel)]="userInfo.first_name" #first_name="ngModel" />
+				</div>
+				<div class="user-modal__body__content">
+					<label class="user-modal__body__label" for="last_name">Last name:</label>
+					<input id="last_name" type="text" class="user-modal__body__input" placeholder="Last Name" autocomplete="off"
+						name="last_name" [(ngModel)]="userInfo.last_name" #last_name="ngModel" />
+				</div>
+				<div class="user-modal__body__content">
+					<label class="user-modal__body__label" for="email">Email</label>
+					<input id="email" type="email" class="user-modal__body__input" placeholder="username" autocomplete="off"
+						name="email" [(ngModel)]="userInfo.email" #email="ngModel" />
+				</div>
+			</form>
+		</div>
+
+		<div class="user-modal__footer">
+			<div class="delete__actions">
+				<button (click)="userModal.close()" class="user-edit__button">
+					cancel
+				</button>
+
+				<button class="user-edit__button user-edit__button--danger"
+					(click)="userSelectedId ? editUser() : addUser(); userModal.close()">
+					{{ userSelectedId ? "save" : "add" }}
+				</button>
+			</div>
+		</div>
 	</div>
 </ngx-smart-modal>

@@ -1,5 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output } from "@angular/core";
 import { AuthService } from "../authentication/auth.service";
+import { EventEmitter } from "events";
 
 @Component({
 	selector: "app-header",
@@ -7,6 +8,7 @@ import { AuthService } from "../authentication/auth.service";
 	styleUrls: ["./header.component.scss"],
 })
 export class HeaderComponent implements OnInit {
+	@Output() isAddUserModalOpened: any = new EventEmitter();
 	constructor(private auth: AuthService) {}
 
 	ngOnInit(): void {}
@@ -15,5 +17,7 @@ export class HeaderComponent implements OnInit {
 		this.auth.logout();
 	}
 
-	addNewUser() {}
+	addNewUser() {
+		this.isAddUserModalOpened.emit(true);
+	}
 }

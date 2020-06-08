@@ -150,3 +150,55 @@ $modal-width: 500px;
 		text-align: right;
 	}
 }
+
+.user-modal {
+
+	&__header,
+	&__body {
+		border-bottom: 1px solid #e3e3e3;
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+	}
+
+	&__header {
+
+		&__title {
+			margin-top: 0;
+			margin-bottom: 0;
+			font-size: 1.25rem;
+		}
+
+		&__username {
+			font-weight: 700;
+			text-transform: capitalize;
+			color: #493385;
+		}
+	}
+
+	&__body {
+		margin-bottom: 1.5rem;
+
+		&__content {
+			padding-top: .5rem;
+			padding-bottom: .5rem;
+		}
+
+		&__input {
+			padding: .5rem;
+			border: 1px solid #e3e3e3;
+			border-radius: .25rem;
+			width: 75%;
+			transition: box-shadow .2s ease-in-out;
+
+			&:focus {
+				box-shadow: 0 0 1rem 0 rgba(#000, .2);
+			}
+		}
+
+		&__label {
+			width: 22%;
+			display: inline-block;
+			cursor: pointer;
+		}
+	}
+}

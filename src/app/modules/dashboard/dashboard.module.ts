@@ -4,7 +4,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { DashboardComponent } from "./page/dashboard.component";
 import { SharedModule } from "src/app/shared/modules/shared.module";
 import { UsersComponent } from "./components/users/users.component";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule } from "@angular/forms";
 import { NgxSmartModalModule } from "ngx-smart-modal";
 import { ClickOutsideModule } from "ng-click-outside";
 import { AuthGuard } from "src/app/core/guards/auth.guard";
@@ -23,7 +23,7 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		NgxSmartModalModule.forRoot(),
 		SharedModule,
-		ReactiveFormsModule,
+		FormsModule,
 		ClickOutsideModule,
 	],
 	exports: [SharedModule],

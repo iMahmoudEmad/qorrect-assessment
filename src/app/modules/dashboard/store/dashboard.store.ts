@@ -1,6 +1,6 @@
 export interface Users {
 	type: string;
-	payload: {
+	users: {
 		id: number;
 		email: string;
 		first_name: string;
@@ -15,12 +15,9 @@ export interface User {
 	first_name: string;
 	last_name: string;
 	avatar: string;
+	updatedAt: string;
 }
 
 export const initialState = {
-	id: null,
-	email: null,
-	first_name: null,
-	last_name: null,
-	avatar: null,
+	users: [],
 };
