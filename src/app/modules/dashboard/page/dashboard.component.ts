@@ -66,13 +66,11 @@ export class DashboardComponent implements OnInit {
 	}
 
 	getUserInfo(userId = this.userSelectedId) {
-		// this.isUserModalOpened = false; // if you wont to close aside userInfo remove this comment
 		if (this.userSelectedId !== this.userInfo.id) {
-			this.dashboardService.getUserInfo(userId).subscribe((res: any) => {
-				this.userInfo = res.data;
-				this.isUserModalOpened = true;
-			});
-		}
+			this.dashboardService
+				.getUserInfo(userId)
+				.subscribe((res: any) => (this.userInfo = res.data));
+		} else setTimeout(() => (this.isUserModalOpened = true));
 	}
 
 	deleteUser(userId = this.userSelectedId) {
