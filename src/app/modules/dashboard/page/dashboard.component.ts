@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
 	}
 
 	fullName(first, last) {
-		return this.sharedService.fullName(first, last);
+		if (first && last) this.sharedService.fullName(first, last);
 	}
 
 	getAllUsers() {
