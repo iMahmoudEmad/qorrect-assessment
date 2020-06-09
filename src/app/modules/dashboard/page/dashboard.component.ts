@@ -5,9 +5,8 @@ import { NgxSmartModalService } from "ngx-smart-modal";
 import { SharedService } from "src/app/shared/services/shared.service";
 import { Store } from "@ngrx/store";
 import * as DashboardActions from "../store/dashboard.action";
-import { Users, User } from "../store/dashboard.store";
+import { Users } from "../store/dashboard.store";
 import { dashboardReducerS } from "../store/dashboard.reducer";
-import { NgForm } from "@angular/forms";
 
 @Component({
 	selector: "app-dashboard",
@@ -70,7 +69,8 @@ export class DashboardComponent implements OnInit {
 			this.dashboardService
 				.getUserInfo(userId)
 				.subscribe((res: any) => (this.userInfo = res.data));
-		} else setTimeout(() => (this.isUserModalOpened = true));
+		}
+		setTimeout(() => (this.isUserModalOpened = true));
 	}
 
 	deleteUser(userId = this.userSelectedId) {
@@ -118,5 +118,10 @@ export class DashboardComponent implements OnInit {
 			});
 			this.currentPage = res.page;
 		});
+	}
+
+	isAddModalOpened(e) {
+		this.isAddUserModalOpened = true;
+		return this.ngxSmartModalService.getModal("userModal").open();
 	}
 }
