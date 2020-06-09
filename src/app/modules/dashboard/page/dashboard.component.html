@@ -80,18 +80,21 @@
 			<form>
 				<div class="user-modal__body__content">
 					<label class="user-modal__body__label" for="first_name">First name:</label>
-					<input id="first_name" type="text" class="user-modal__body__input" placeholder="First Name" autocomplete="off"
-						name="first_name" [(ngModel)]="isAddUserModalOpened ? user.first_name : userInfo.first_name" />
+					<input id="first_name" type="text" class="user-modal__body__input" placeholder="First Name" name="first_name"
+						[ngModel]="isAddUserModalOpened ? user.first_name : userInfo.first_name"
+						(ngModelChange)="isAddUserModalOpened ? user.first_name = $event : userInfo.first_name = $event" />
 				</div>
 				<div class="user-modal__body__content">
 					<label class="user-modal__body__label" for="last_name">Last name:</label>
-					<input id="last_name" type="text" class="user-modal__body__input" placeholder="Last Name" autocomplete="off"
-						name="last_name" [(ngModel)]="isAddUserModalOpened ? user.last_name : userInfo.last_name" />
+					<input id="last_name" type="text" class="user-modal__body__input" placeholder="Last Name" name="last_name"
+						[ngModel]="isAddUserModalOpened ? user.last_name : userInfo.last_name"
+						(ngModelChange)="isAddUserModalOpened ? user.last_name = $event : userInfo.last_name = $event" />
 				</div>
 				<div class="user-modal__body__content">
 					<label class="user-modal__body__label" for="email">Email</label>
-					<input id="email" type="email" class="user-modal__body__input" placeholder="username" autocomplete="off"
-						name="email" [(ngModel)]="isAddUserModalOpened ? user.email : userInfo.email" />
+					<input id="email" type="email" class="user-modal__body__input" placeholder="username" name="email"
+						[ngModel]="isAddUserModalOpened ? user.email : userInfo.email"
+						(ngModelChange)="isAddUserModalOpened ? user.email = $event : userInfo.email = $event" />
 				</div>
 			</form>
 		</div>

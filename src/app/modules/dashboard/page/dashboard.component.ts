@@ -103,6 +103,7 @@ export class DashboardComponent implements OnInit {
 	}
 
 	editUser() {
+		this.isAddUserModalOpened = false;
 		this.dashboardService.editUser(this.userInfo).subscribe((user: any) => {
 			this.userInfo = user;
 			this.userSelectedId = null;
