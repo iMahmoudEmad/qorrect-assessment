@@ -6,6 +6,8 @@ export interface Users {
 		first_name: string;
 		last_name: string;
 		avatar: string;
+		updatedAt: string;
+		createdAt: string;
 	};
 }
 
@@ -16,6 +18,7 @@ export interface User {
 	last_name: string;
 	avatar: string;
 	updatedAt: string;
+	createdAt: string;
 }
 
 export const initialState = {

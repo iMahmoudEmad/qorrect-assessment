@@ -6,8 +6,8 @@
 
 <section *ngIf="!isLoading" class="users" [class.modal-opened]="isUserModalOpened">
 	<div class="container" [class.modal-opened]="isUserModalOpened">
-		<app-users (click)="getUserInfo()" [users]="users" (opened)="userSelectedId = $event"
-			(curruntPage)="pageChanged($event)" [per_page]="per_page" [page]="currentPage" [total]="total">
+		<app-users [users]="users" (opened)="getUserInfo($event)" (curruntPage)="pageChanged($event)" [per_page]="per_page"
+			[page]="currentPage" [total]="total">
 		</app-users>
 	</div>
 	<!-- .container -->
@@ -65,33 +65,33 @@
 	</div>
 </ngx-smart-modal>
 
-<ngx-smart-modal #userModal identifier="userModal">
+<ngx-smart-modal #userModal identifier="userModal" (onClose)="isAddUserModalOpened = false">
 	<div class="user-modal">
 		<div class="user-modal__header">
 			<h2 class="user-modal__header__title">
-				{{ userSelectedId ? "Edit user:" : "Add User" }}
-				<span *ngIf="userSelectedId" class="user-modal__header__username">
+				{{ isAddUserModalOpened ? "Add User" : "Edit user:" }}
+				<span *ngIf="!isAddUserModalOpened" class="user-modal__header__username">
 					{{ fullName(userInfo.first_name, userInfo.last_name) }}
 				</span>
 			</h2>
 		</div>
 
 		<div class="user-modal__body">
-			<form #user="ngForm">
+			<form>
 				<div class="user-modal__body__content">
 					<label class="user-modal__body__label" for="first_name">First name:</label>
 					<input id="first_name" type="text" class="user-modal__body__input" placeholder="First Name" autocomplete="off"
-						name="first_name" [(ngModel)]="userInfo.first_name" #first_name="ngModel" />
+						name="first_name" [(ngModel)]="isAddUserModalOpened ? user.first_name : userInfo.first_name" />
 				</div>
 				<div class="user-modal__body__content">
 					<label class="user-modal__body__label" for="last_name">Last name:</label>
 					<input id="last_name" type="text" class="user-modal__body__input" placeholder="Last Name" autocomplete="off"
-						name="last_name" [(ngModel)]="userInfo.last_name" #last_name="ngModel" />
+						name="last_name" [(ngModel)]="isAddUserModalOpened ? user.last_name : userInfo.last_name" />
 				</div>
 				<div class="user-modal__body__content">
 					<label class="user-modal__body__label" for="email">Email</label>
 					<input id="email" type="email" class="user-modal__body__input" placeholder="username" autocomplete="off"
-						name="email" [(ngModel)]="userInfo.email" #email="ngModel" />
+						name="email" [(ngModel)]="isAddUserModalOpened ? user.email : userInfo.email" />
 				</div>
 			</form>
 		</div>
@@ -103,8 +103,8 @@
 				</button>
 
 				<button class="user-edit__button user-edit__button--danger"
-					(click)="userSelectedId ? editUser() : addUser(); userModal.close()">
-					{{ userSelectedId ? "save" : "add" }}
+					(click)="isAddUserModalOpened ? addUser() : editUser(); userModal.close()">
+					{{ isAddUserModalOpened ? "add" : "save" }}
 				</button>
 			</div>
 		</div>

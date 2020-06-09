@@ -5,7 +5,7 @@ import { NgxSmartModalService } from "ngx-smart-modal";
 import { SharedService } from "src/app/shared/services/shared.service";
 import { Store } from "@ngrx/store";
 import * as DashboardActions from "../store/dashboard.action";
-import { Users } from "../store/dashboard.store";
+import { Users, User } from "../store/dashboard.store";
 import { dashboardReducerS } from "../store/dashboard.reducer";
 
 @Component({
@@ -15,17 +15,27 @@ import { dashboardReducerS } from "../store/dashboard.reducer";
 })
 export class DashboardComponent implements OnInit {
 	users;
-	userInfo = {
+	user: User = {
 		id: null,
+		email: null,
 		first_name: null,
 		last_name: null,
+		avatar: null,
+		updatedAt: null,
+		createdAt: null,
+	};
+	userInfo: User = {
+		id: null,
 		email: null,
+		first_name: null,
+		last_name: null,
 		avatar: null,
 		updatedAt: null,
 		createdAt: null,
 	};
 	userSelectedId;
-	isUserModalOpened = false;
+	isUserModalOpened: boolean = false;
+	isAddUserModalOpened: boolean = false;
 	currentPage: number;
 	total: number;
 	per_page: number;
@@ -66,7 +76,8 @@ export class DashboardComponent implements OnInit {
 		});
 	}
 
-	getUserInfo(userId = this.userSelectedId) {
+	getUserInfo(userId) {
+		this.userSelectedId = userId;
 		if (this.userSelectedId || this.userInfo.id)
 			setTimeout(() => (this.isUserModalOpened = true));
 		if (this.userSelectedId && this.userSelectedId !== this.userInfo.id) {
@@ -104,13 +115,13 @@ export class DashboardComponent implements OnInit {
 	}
 
 	addUser() {
-		this.dashboardService.addUser(this.userInfo).subscribe((user) => {
-			this.users = [...this.users, user];
+		this.dashboardService.addUser(this.user).subscribe((user) => {
 			this.store.dispatch({
 				type: DashboardActions.ADD_USER,
 				users: user,
 			});
 			this.toaster.success("Added successfuly");
+			this.isAddUserModalOpened = false;
 		});
 	}
 
@@ -125,6 +136,7 @@ export class DashboardComponent implements OnInit {
 	}
 
 	addUserModal() {
+		this.isAddUserModalOpened = true;
 		this.ngxSmartModalService.create("userModal", "").open();
 	}
 }
