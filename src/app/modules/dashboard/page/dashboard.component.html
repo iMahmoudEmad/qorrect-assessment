@@ -1,6 +1,10 @@
-<app-header (isUserModalOpened)="addUserModal($event)"></app-header>
+<app-header (isUserModalOpened)="addUserModal()"></app-header>
 
-<section class="users" [class.modal-opened]="isUserModalOpened">
+<div *ngIf="isLoading">
+	<h2>Loading...</h2>
+</div>
+
+<section *ngIf="!isLoading" class="users" [class.modal-opened]="isUserModalOpened">
 	<div class="container" [class.modal-opened]="isUserModalOpened">
 		<app-users (click)="getUserInfo()" [users]="users" (opened)="userSelectedId = $event"
 			(curruntPage)="pageChanged($event)" [per_page]="per_page" [page]="currentPage" [total]="total">
@@ -66,7 +70,7 @@
 		<div class="user-modal__header">
 			<h2 class="user-modal__header__title">
 				{{ userSelectedId ? "Edit user:" : "Add User" }}
-				<span *ngIf="userInfo" class="user-modal__header__username">
+				<span *ngIf="userSelectedId" class="user-modal__header__username">
 					{{ fullName(userInfo.first_name, userInfo.last_name) }}
 				</span>
 			</h2>

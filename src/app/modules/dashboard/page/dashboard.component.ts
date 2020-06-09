@@ -30,6 +30,7 @@ export class DashboardComponent implements OnInit {
 	total: number;
 	per_page: number;
 	token;
+	isLoading: boolean;
 
 	constructor(
 		private dashboardService: DashboardService,
@@ -48,10 +49,11 @@ export class DashboardComponent implements OnInit {
 	}
 
 	fullName(first, last) {
-		if (first && last) this.sharedService.fullName(first, last);
+		return this.sharedService.fullName(first, last);
 	}
 
 	getAllUsers() {
+		this.isLoading = true;
 		this.dashboardService.getAllUsers().subscribe((res: any) => {
 			this.store.dispatch({
 				type: DashboardActions.ALL_USERS,
@@ -60,16 +62,18 @@ export class DashboardComponent implements OnInit {
 			this.currentPage = res.page;
 			this.total = res.total;
 			this.per_page = res.per_page;
+			this.isLoading = false;
 		});
 	}
 
 	getUserInfo(userId = this.userSelectedId) {
-		if (this.userSelectedId !== this.userInfo.id) {
-			this.dashboardService
-				.getUserInfo(userId)
-				.subscribe((res: any) => (this.userInfo = res.data));
+		if (this.userSelectedId || this.userInfo.id)
+			setTimeout(() => (this.isUserModalOpened = true));
+		if (this.userSelectedId && this.userSelectedId !== this.userInfo.id) {
+			this.dashboardService.getUserInfo(userId).subscribe((res: any) => {
+				this.userInfo = res.data;
+			});
 		}
-		setTimeout(() => (this.isUserModalOpened = true));
 	}
 
 	deleteUser(userId = this.userSelectedId) {
@@ -90,6 +94,7 @@ export class DashboardComponent implements OnInit {
 	editUser() {
 		this.dashboardService.editUser(this.userInfo).subscribe((user: any) => {
 			this.userInfo = user;
+			this.userSelectedId = null;
 			this.store.dispatch({
 				type: DashboardActions.UPDATE_USER,
 				users: user,
@@ -119,8 +124,7 @@ export class DashboardComponent implements OnInit {
 		});
 	}
 
-	addUserModal(e) {
-		console.log(e);
-		this.ngxSmartModalService.create("userModal", "content").open();
+	addUserModal() {
+		this.ngxSmartModalService.create("userModal", "").open();
 	}
 }
