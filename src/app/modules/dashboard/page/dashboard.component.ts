@@ -77,6 +77,7 @@ export class DashboardComponent implements OnInit {
 	}
 
 	getUserInfo(userId) {
+		this.isAddUserModalOpened = false;
 		this.userSelectedId = userId;
 		if (this.userSelectedId || this.userInfo.id)
 			setTimeout(() => (this.isUserModalOpened = true));

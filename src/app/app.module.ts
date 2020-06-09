@@ -31,7 +31,12 @@ import { dashboardReducer } from "./modules/dashboard/store/dashboard.reducer";
 				token: loginReducer,
 				users: dashboardReducer,
 			},
-			{}
+			{
+				runtimeChecks: {
+					strictStateImmutability: false,
+					strictActionImmutability: false,
+				},
+			}
 		),
 		StoreDevtoolsModule.instrument({
 			maxAge: 25,
