@@ -22,9 +22,9 @@ const routes: Routes = [
 	imports: [
 		RouterModule.forChild(routes),
 		NgxSmartModalModule.forRoot(),
-		SharedModule,
 		FormsModule,
 		ClickOutsideModule,
+		SharedModule,
 	],
 	exports: [SharedModule],
 })

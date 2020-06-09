@@ -26,7 +26,6 @@ export class DashboardComponent implements OnInit {
 	};
 	userSelectedId;
 	isUserModalOpened = false;
-	isAddUserModalOpened = false;
 	currentPage: number;
 	total: number;
 	per_page: number;
@@ -120,8 +119,8 @@ export class DashboardComponent implements OnInit {
 		});
 	}
 
-	isAddModalOpened(e) {
-		this.isAddUserModalOpened = true;
-		return this.ngxSmartModalService.getModal("userModal").open();
+	addUserModal(e) {
+		console.log(e);
+		this.ngxSmartModalService.create("userModal", "content").open();
 	}
 }

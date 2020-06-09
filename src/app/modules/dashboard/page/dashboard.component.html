@@ -1,4 +1,5 @@
-<app-header (addUserModalOpened)="isAddUserModalOpened = $event"></app-header>
+<app-header (isUserModalOpened)="addUserModal($event)"></app-header>
+
 <section class="users" [class.modal-opened]="isUserModalOpened">
 	<div class="container" [class.modal-opened]="isUserModalOpened">
 		<app-users (click)="getUserInfo()" [users]="users" (opened)="userSelectedId = $event"
